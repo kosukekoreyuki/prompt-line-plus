@@ -1,7 +1,7 @@
 {
-  "name": "prompt-line",
-  "version": "0.36.3",
-  "description": "Prompt Line is a macOS app developed to improve the prompt input experience in the terminal for CLI-based AI coding agents such as Claude Code, OpenAI Codex CLI, and Aider.",
+  "name": "prompt-line-plus",
+  "version": "0.1.0",
+  "description": "Prompt Line Plus is a macOS app for improving the prompt input experience for CLI-based AI coding agents (Claude Code, Codex CLI, Gemini CLI). A derivative of nkmr-jp/prompt-line that adds bullet-list auto-formatting, a glassmorphic transparent window, and keeps the window open on focus loss.",
   "main": "dist/main.js",
   "bin": {
     "prompt-line-plugin": "scripts/plugin-cli.js"
@@ -29,7 +29,7 @@
     "pre-push": "pnpm run lint && pnpm run typecheck && pnpm test",
     "prepare": "husky",
     "setup-codesign": "bash scripts/setup-codesign.sh",
-    "reset-accessibility": "tccutil reset Accessibility com.electron.prompt-line && echo '✅ Accessibility permissions for Prompt Line have been reset'",
+    "reset-accessibility": "tccutil reset Accessibility com.kosukekoreyuki.prompt-line-plus && echo '✅ Accessibility permissions for Prompt Line Plus have been reset'",
     "plugin": "pnpm exec ts-node scripts/plugin.ts",
     "plugin:install": "pnpm exec ts-node scripts/plugin.ts install",
     "plugin:help": "pnpm exec ts-node scripts/plugin.ts help",
@@ -42,8 +42,19 @@
     "text",
     "productivity"
   ],
-  "author": "nkmr-jp",
+  "author": "Kosuke Koreyuki",
+  "contributors": [
+    "nkmr-jp (original author of prompt-line)"
+  ],
   "license": "MIT",
+  "homepage": "https://github.com/kosukekoreyuki/prompt-line-plus#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kosukekoreyuki/prompt-line-plus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kosukekoreyuki/prompt-line-plus/issues"
+  },
   "engines": {
     "node": ">=20.8.1"
   },
@@ -71,8 +82,8 @@
     "vitest": "^4.0.18"
   },
   "build": {
-    "appId": "com.electron.prompt-line",
-    "productName": "Prompt Line",
+    "appId": "com.kosukekoreyuki.prompt-line-plus",
+    "productName": "Prompt Line Plus",
     "files": [
       "dist/**/*",
       "assets/**/*",

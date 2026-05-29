@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
-# package-lock.json should be tracked for exact dependency versions
-# package-lock.json
+# This project uses pnpm (pnpm-lock.yaml). Ignore npm's lockfile to avoid conflicts.
+package-lock.json
 
 # Build outputs
 dist/
