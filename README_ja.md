@@ -1,11 +1,13 @@
-# 🧑‍💻 Prompt Line
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/nkmr-jp/prompt-line)
+# 🧑‍💻 Prompt Line Plus
 
 [English](README.md) |
 日本語
 
+> **Prompt Line Plus** は [nkmr-jp/prompt-line](https://github.com/nkmr-jp/prompt-line)（MIT）の派生版です。
+> 箇条書きの自動整形、グラスモーフィックな透過ウィンドウ、フォーカス離脱で閉じない（Escで閉じる）挙動を追加しています。詳細は [クレジット](#クレジット) を参照。
+
 ## 概要
-Prompt Lineは、[Claude Code](https://github.com/anthropics/claude-code)、[Codex CLI](https://github.com/openai/codex)、[Gemini CLI](https://github.com/google-gemini/gemini-cli) などのCLI型AIコーディングエージェントのターミナルでのプロンプト入力体験の向上を目的として開発したmacOSアプリです。
+Prompt Line Plusは、[Claude Code](https://github.com/anthropics/claude-code)、[Codex CLI](https://github.com/openai/codex)、[Gemini CLI](https://github.com/google-gemini/gemini-cli) などのCLI型AIコーディングエージェントのターミナルでのプロンプト入力体験の向上を目的として開発したmacOSアプリです。
 フローティングウィンドウによる快適な入力体験を提供します。
 
 主な機能：
@@ -69,14 +71,14 @@ Enterを押しても勝手に送信されないので、改行する場合も気
 ### Prompt Line の インストール
 
 ```bash
-git clone https://github.com/nkmr-jp/prompt-line.git
-cd prompt-line
+git clone https://github.com/kosukekoreyuki/prompt-line-plus.git
+cd prompt-line-plus
 git checkout v0.x.x  # 任意: 必要なバージョンタグに置き換え
 pnpm install
 pnpm run install-app    # ビルドして/Applicationsにインストール（コード署名セットアップ含む）
 ```
 
-Prompt Lineを起動。システムトレーにアイコンが表示されます。
+Prompt Line Plusを起動。システムトレーにアイコンが表示されます。
 
 <div><img src="assets/doc6.png" width="200"></div>
 
@@ -178,6 +180,16 @@ prompt-line-plugin install github.com/user/repo@branch   # バージョン指定
 
 詳細は [Contribution Guide](CONTRIBUTING.md) をご確認ください。
 
+## クレジット
+
+Prompt Line Plus は、**[nkmr-jp](https://github.com/nkmr-jp)** による **[Prompt Line](https://github.com/nkmr-jp/prompt-line)**（© 2025 nkmr-jp, MIT License）を基にした派生版です。オリジナルアプリケーションのすべての功績は upstream の作者に帰属します。背景は upstream のドキュメント（[Ask DeepWiki](https://deepwiki.com/nkmr-jp/prompt-line)）を参照してください。
+
+本フォークで追加した変更点:
+
+- **箇条書きの自動整形** — Enter で箇条書きを継続/解除、Tab / Shift+Tab でインデントを増減。
+- **グラスモーフィックな透過ウィンドウ** — backdrop blur による半透明 UI。
+- **フォーカス離脱で閉じない** — フォーカスを失っても閉じず、Esc でのみ閉じる。
+
 ## ライセンス
 
-MIT License - 詳細は [LICENSE](./LICENSE) をご確認ください。
+MIT License - 詳細は [LICENSE](./LICENSE) と [NOTICE](./NOTICE) をご確認ください。MIT License の要件に従い、オリジナルの著作権表示（© 2025 nkmr-jp）を保持しています。

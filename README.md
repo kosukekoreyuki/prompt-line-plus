@@ -1,13 +1,15 @@
-# 🧑‍💻 Prompt Line
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/nkmr-jp/prompt-line)
+# 🧑‍💻 Prompt Line Plus
 
 <!-- Keep these links. Translations will automatically update with the README. -->
 English |
 [日本語](README_ja.md)
 
+> **Prompt Line Plus** is a derivative of [nkmr-jp/prompt-line](https://github.com/nkmr-jp/prompt-line) (MIT).
+> It adds bullet-list auto-formatting, a glassmorphic transparent window, and keeps the window open on focus loss (dismiss with Esc). See [Credits](#credits).
+
 ## Overview
 
-Prompt Line is a macOS app developed to improve the prompt input experience in the terminal for CLI-based AI coding agents such as [Claude Code](https://github.com/anthropics/claude-code), [Codex CLI](https://github.com/openai/codex), and [Gemini CLI](https://github.com/google-gemini/gemini-cli).
+Prompt Line Plus is a macOS app developed to improve the prompt input experience in the terminal for CLI-based AI coding agents such as [Claude Code](https://github.com/anthropics/claude-code), [Codex CLI](https://github.com/openai/codex), and [Gemini CLI](https://github.com/google-gemini/gemini-cli).
 It provides a comfortable input experience through a floating window.
 
 Key capabilities:
@@ -73,14 +75,14 @@ These can be extended with plugins. See: [Plugin Guide](docs/en/plugins.md) | [p
 ### Prompt Line Installation
 
 ```bash
-git clone https://github.com/nkmr-jp/prompt-line.git
-cd prompt-line
+git clone https://github.com/kosukekoreyuki/prompt-line-plus.git
+cd prompt-line-plus
 git checkout v0.x.x  # Optional: replace with desired version tag
 pnpm install
 pnpm run install-app    # Build and install to /Applications (includes code signing setup)
 ```
 
-Launch Prompt Line. An icon will appear in the system tray.
+Launch Prompt Line Plus. An icon will appear in the system tray.
 
 <div><img src="assets/doc6.png" width="200"></div>
 
@@ -182,6 +184,16 @@ prompt-line-plugin install github.com/user/repo@branch   # specific version
 
 See [Contribution Guide](CONTRIBUTING.md) for details.
 
+## Credits
+
+Prompt Line Plus is a derivative work built on top of **[Prompt Line](https://github.com/nkmr-jp/prompt-line)** by **[nkmr-jp](https://github.com/nkmr-jp)** (© 2025 nkmr-jp, MIT License). All credit for the original application goes to the upstream author. See the upstream docs ([Ask DeepWiki](https://deepwiki.com/nkmr-jp/prompt-line)) for background.
+
+Modifications introduced in this fork:
+
+- **Bullet-list auto-formatting** — Enter continues/exits a list, Tab / Shift+Tab adjust indentation.
+- **Glassmorphic transparent window** — backdrop-blurred, translucent UI.
+- **Stays open on blur** — the window is dismissed only with Esc, not on focus loss.
+
 ## License
 
-MIT License - see [LICENSE](./LICENSE) for details.
+MIT License - see [LICENSE](./LICENSE) and [NOTICE](./NOTICE) for details. The original copyright notice (© 2025 nkmr-jp) is retained as required by the MIT License.

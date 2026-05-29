@@ -1,0 +1,24 @@
+prompt-line-plus
+================
+
+This product is a derivative work based on "Prompt Line" by nkmr-jp.
+
+Original work:
+  Prompt Line
+  Copyright (c) 2025 nkmr-jp
+  https://github.com/nkmr-jp/prompt-line
+  Licensed under the MIT License.
+
+Modifications in this distribution:
+  Copyright (c) 2026 Kosuke Koreyuki
+  https://github.com/kosukekoreyuki/prompt-line-plus
+  Licensed under the MIT License.
+
+Summary of modifications relative to the original:
+  - Bullet-list auto-formatting in the input area (Enter continues/exits a
+    list, Tab / Shift+Tab adjust indentation).
+  - Glassmorphic, transparent window styling (backdrop blur).
+  - The window stays open on focus loss and is dismissed only with Esc.
+
+The full text of the MIT License, including the original copyright notice,
+is provided in the LICENSE file in accordance with its terms.
