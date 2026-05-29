@@ -19,7 +19,6 @@ export class LifecycleManager {
     private setTextCallback: (text: string) => void,
     private focusTextareaCallback: () => void,
     private setCursorPositionCallback: (position: number) => void,
-    private selectAllCallback: () => void,
     private setScrollTopCallback: (scrollTop: number) => void
   ) {}
 
@@ -61,7 +60,8 @@ export class LifecycleManager {
   }
 
   private initializeTextArea(draftInfo: DraftInfo, hasDraft: boolean): void {
-    this.setTextCallback(draftInfo.text);
+    const initialText = hasDraft ? draftInfo.text : '- ';
+    this.setTextCallback(initialText);
 
     // Restore scroll position immediately after setting text (before rendering)
     // to prevent visual flickering
@@ -72,7 +72,7 @@ export class LifecycleManager {
     setTimeout(() => {
       this.focusTextareaCallback();
       if (!hasDraft) {
-        this.selectAllCallback();
+        this.setCursorPositionCallback(initialText.length);
       } else {
         this.setCursorPositionCallback(draftInfo.text.length);
         // Re-apply scroll position after cursor is set (cursor setting may affect scroll)

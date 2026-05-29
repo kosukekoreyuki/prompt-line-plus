@@ -7,6 +7,7 @@ import { ShortcutHandler } from './shortcut-handler';
 import { WindowBlurHandler } from './window-blur-handler';
 import type { UserSettings } from './types';
 import type { IInitializable } from './interfaces/initializable';
+import type { AutoFormatManager } from './auto-format-manager';
 
 export interface PasteResult {
   success: boolean;
@@ -30,6 +31,7 @@ export class EventHandler implements IInitializable {
   private onShiftTabKeyPress: (e: KeyboardEvent) => void;
   private shortcutHandler: ShortcutHandler;
   private windowBlurHandler: WindowBlurHandler;
+  private autoFormatManager: AutoFormatManager | null = null;
 
   // Bound event handlers to prevent memory leaks
   private boundHandleDocumentKeyDown = this.handleDocumentKeyDown.bind(this);
@@ -93,6 +95,11 @@ export class EventHandler implements IInitializable {
     this.shortcutHandler.setRunShortcuts(shortcuts);
   }
 
+  public setAutoFormatManager(mgr: AutoFormatManager): void {
+    this.autoFormatManager = mgr;
+    this.shortcutHandler.setAutoFormatManager(mgr);
+  }
+
   /**
    * Initialize event listeners (IInitializable implementation)
    */
@@ -154,6 +161,11 @@ export class EventHandler implements IInitializable {
       e.preventDefault();
       // Stop propagation to prevent duplicate handling by document listener
       e.stopPropagation();
+
+      // Auto-format: bullet list indentation takes priority
+      if (this.autoFormatManager?.handleTabKey(e.shiftKey)) {
+        return;
+      }
 
       if (e.shiftKey) {
         // Shift+Tab: outdent (remove indentation)

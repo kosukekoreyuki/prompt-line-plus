@@ -21,6 +21,7 @@ import { LifecycleManager } from './lifecycle-manager';
 import { SimpleSnapshotManager } from './snapshot-manager';
 import { MentionManager } from './mention-manager';
 import { DirectoryDataHandler } from './directory-data-handler';
+import { AutoFormatManager } from './auto-format-manager';
 import { rendererLogger } from './utils/logger';
 import { electronAPI } from './services/electron-api';
 
@@ -102,7 +103,6 @@ export class PromptLineRenderer {
       (text: string) => this.domManager.setText(text),
       () => this.domManager.focusTextarea(),
       (position: number) => this.domManager.setCursorPosition(position),
-      () => this.domManager.selectAll(),
       (scrollTop: number) => this.domManager.setScrollTop(scrollTop)
     );
     this.directoryDataHandler = new DirectoryDataHandler({
@@ -177,6 +177,9 @@ export class PromptLineRenderer {
     this.eventHandler.setTextarea(this.domManager.textarea);
     this.eventHandler.setDomManager(this.domManager);
     this.eventHandler.setupEventListeners();
+
+    const autoFormatManager = new AutoFormatManager(this.domManager);
+    this.eventHandler.setAutoFormatManager(autoFormatManager);
   }
 
   private setupSearchManager(): void {

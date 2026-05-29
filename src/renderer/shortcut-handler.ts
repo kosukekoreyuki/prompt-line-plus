@@ -7,6 +7,7 @@ import { matchesShortcutString } from './utils/shortcut-parser';
 import { rendererLogger } from './utils/logger';
 import type { UserSettings } from './types';
 import { electronAPI } from './services/electron-api';
+import type { AutoFormatManager } from './auto-format-manager';
 
 export class ShortcutHandler {
   private textarea: HTMLTextAreaElement | null = null;
@@ -17,6 +18,7 @@ export class ShortcutHandler {
   private userSettings: UserSettings | null = null;
   private customSearchShortcuts: Array<{ shortcut: string; triggerText: string }> = [];
   private runShortcuts: Array<{ shortcut: string; command: string }> = [];
+  private autoFormatManager: AutoFormatManager | null = null;
   private onTextPaste: (text: string) => Promise<void>;
   private onWindowHide: () => Promise<void>;
   private onTabKeyInsert: (e: KeyboardEvent) => void;
@@ -80,6 +82,10 @@ export class ShortcutHandler {
     this.runShortcuts = shortcuts;
   }
 
+  public setAutoFormatManager(mgr: AutoFormatManager): void {
+    this.autoFormatManager = mgr;
+  }
+
   public setIsComposing(isComposing: boolean): void {
     this.isComposing = isComposing;
   }
@@ -98,6 +104,14 @@ export class ShortcutHandler {
     // Handle Cmd+Z for Undo
     if (e.key === 'z' && e.metaKey && !e.shiftKey) {
       return this.handleUndoShortcut(e);
+    }
+
+    // Handle auto-format Enter (bullet list continuation / de-indent)
+    if (e.key === 'Enter' && !e.metaKey && !e.ctrlKey && !e.shiftKey && !this.isComposing && !e.isComposing) {
+      if (this.autoFormatManager?.handleEnterKey()) {
+        e.preventDefault();
+        return true;
+      }
     }
 
     // Handle paste shortcut (default: Cmd+Enter, configurable via settings)
