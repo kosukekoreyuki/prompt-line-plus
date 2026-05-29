@@ -6,7 +6,9 @@
 
 .history-container {
     @apply overflow-hidden flex flex-col h-full;
-    background: var(--bg-primary);
+    background: oklch(from var(--color-neutral-950) l c h / 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-radius: 0;
     box-shadow: none;
     border-left: 1px solid var(--border-primary);
@@ -14,7 +16,7 @@
 
 .history-header {
     @apply flex justify-between items-center relative;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
     border-bottom: 1px solid var(--border-primary);
     background: var(--bg-secondary);
 }
@@ -33,21 +35,21 @@
 }
 
 .history-title {
-    font-size: var(--font-size-base);
-    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+    color: var(--text-tertiary);
     font-weight: 500;
     margin: 0;
 }
 
 .history-shortcuts {
-    font-size: 10px;
-    color: oklch(from var(--color-white) l c h / 0.4);
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
     font-weight: normal;
 }
 
 .history-shortcuts kbd,
 .history-kbd {
-    font-size: 9px;
+    font-size: var(--font-size-xs);
     padding: 1px 4px;
 }
 
