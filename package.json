@@ -1,6 +1,6 @@
 {
   "name": "prompt-line-plus",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Prompt Line Plus is a macOS app for improving the prompt input experience for CLI-based AI coding agents (Claude Code, Codex CLI, Gemini CLI). A derivative of nkmr-jp/prompt-line that adds bullet-list auto-formatting, a glassmorphic transparent window, and keeps the window open on focus loss.",
   "main": "dist/main.js",
   "bin": {
