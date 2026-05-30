@@ -4,196 +4,156 @@
 English |
 [日本語](README_ja.md)
 
-> **Prompt Line Plus** is a derivative of [nkmr-jp/prompt-line](https://github.com/nkmr-jp/prompt-line) (MIT).
-> It adds bullet-list auto-formatting, a glassmorphic transparent window, and keeps the window open on focus loss (dismiss with Esc). See [Credits](#credits).
+> **Prompt Line Plus** is a derivative of [nkmr-jp/prompt-line](https://github.com/nkmr-jp/prompt-line) (MIT). It keeps the fast floating-input core of the original and reshapes the editing experience around outlines, a glass UI, and a window that stays put. See [Credits](#credits).
 
 ## Overview
 
-Prompt Line Plus is a macOS app developed to improve the prompt input experience in the terminal for CLI-based AI coding agents such as [Claude Code](https://github.com/anthropics/claude-code), [Codex CLI](https://github.com/openai/codex), and [Gemini CLI](https://github.com/google-gemini/gemini-cli).
-It provides a comfortable input experience through a floating window.
+Prompt Line Plus is a macOS floating text window for composing prompts to terminal AI coding agents — [Claude Code](https://github.com/anthropics/claude-code), [Codex CLI](https://github.com/openai/codex), [Gemini CLI](https://github.com/google-gemini/gemini-cli), and anything else that accepts pasted text. Call it up with a shortcut from wherever you are, write comfortably in a real text area, and drop the result into the app you were just in.
 
-Key capabilities:
+This build is an opinionated take on the original Prompt Line, tuned around three ideas:
 
-1. **Quick input, quick paste** — Floating window with `Cmd+Shift+Space`, paste anywhere with `Cmd+Enter`
-2. **Context search** — Search agent skills, files, symbols, and more with `/` and `@`, with prompt history reuse
-3. **Extensible via plugins** — Add custom search and skills with simple YAML files ([Plugin Guide](docs/en/plugins.md))
-
+1. **Write outlines, not one-liners** — Enter and Tab behave like an outliner so bullet lists stay tidy as you type.
+2. **A window that floats, not blocks** — a translucent, backdrop-blurred panel that sits over your work instead of covering it.
+3. **It stays until you dismiss it** — losing focus no longer closes the window; you close it on purpose with `Esc`.
 
 ## Features
 
-### Quick Launch, Quick Paste
-Quick launch with shortcut (`Cmd+Shift+Space`).<br>
-Type text and quick paste (`Cmd+Enter`).
-![doc1.gif](assets/doc1.gif)
+> 📸 Screenshots and GIFs of the Prompt Line Plus UI (glass / transparent) are on the way. The original demo media was removed because it showed the upstream UI, which looks different from this build.
 
-### Perfect for Editing Voice-Inputted Text
-The operation is the same as a typical text editor. <br>
-Of course, you can also use it in combination with a voice input app. <br>
-Pressing Enter will not automatically send the text, so you don't have to worry about line breaks. <br>
-It is also ideal for editing text entered by voice. <br>
-(This video uses [superwhisper](https://superwhisper.com/).)
-![doc2.gif](assets/doc2.gif)
+### Summon anywhere, paste anywhere
+Open the window from any text field with `Cmd+Shift+Space`, type, and paste into the previously focused app with `Cmd+Enter`. It works in the terminal and in ordinary apps alike, which makes it handy for reusing the same prompt across tools.
 
-### Search and Reuse Prompt History
-Prompt history is saved and can be reused from the right menu. <br>
-Search is also available. (`Cmd+f`)
-![doc3.gif](assets/doc3.gif)
+### Bullet-list auto-formatting
+The input area treats bullet lists like an outliner:
 
-### Launch Anywhere
-Can be launched anywhere there's a text input field. <br>
-Also convenient when you want to reuse the same prompt in other apps.
-![doc4.gif](assets/doc4.gif)
+- `Enter` continues the current bullet, or exits the list when the bullet is empty.
+- `Tab` / `Shift+Tab` indent and outdent.
+- A new window starts you on a fresh `- ` bullet, ready to type.
 
-Of course, it also works with apps other than Terminal.
-![doc5.gif](assets/doc5.gif)
+### Glass, transparent window
+The panel is transparent with a backdrop blur, so it reads as an overlay floating above your editor or terminal rather than an opaque box.
 
-### Context Search and Autocomplete
+### Stays open on focus loss
+The window is no longer hidden the moment it loses focus. It remains open while you glance elsewhere and is dismissed only with `Esc` — convenient when you are copying context from another window into your prompt.
 
-Type `/` or `@` to search and autocomplete contexts such as agent skills, built-in commands, files, and symbols.<br>
-These can be extended with plugins. See: [Plugin Guide](docs/en/plugins.md) | [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins)
-<table>
-<tr>
-<td>Agent Skills and Built-in Commands <img src="assets/doc9.png"> </td>
-<td>File and Directory Search <img src="assets/doc10.png"> </td>
-</tr>
-<tr>
-<td>Symbol Search<img src="assets/doc11.png"> </td>
-<td>Custom Search (@agent:, @plan:, @team:, etc.) <img src="assets/doc14.png"> </td>
-</tr>
-</table>
+### Edit like a normal editor
+Behaves like any text editor, so it pairs well with voice input (for example [superwhisper](https://superwhisper.com/)). `Enter` never sends on its own, so line breaks are safe.
+
+### Searchable prompt history
+Every prompt is saved and reusable from the side menu, with search via `Cmd+f`.
+
+### Context search and autocomplete
+Type `/` or `@` to search and autocomplete agent skills, built-in commands, files, and code symbols. Extend these with plugins — see the [Plugin Guide](docs/en/plugins.md) and [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins).
 
 ## 📦 Installation
 
-### System Requirements
+### Requirements
 
 - macOS 10.14 or later
 - Node.js 20 or later
 - [pnpm](https://pnpm.io/installation)
-- Xcode Command Line Tools or Xcode (for compiling native tools)
-- [fd](https://github.com/sharkdp/fd) and [rg (ripgrep)](https://github.com/BurntSushi/ripgrep) (for file search and symbol search features)
+- Xcode Command Line Tools (to compile the native helpers)
+- [fd](https://github.com/sharkdp/fd) and [ripgrep](https://github.com/BurntSushi/ripgrep) (for file and symbol search)
 
-### Prompt Line Installation
+### Build and install
 
 ```bash
 git clone https://github.com/kosukekoreyuki/prompt-line-plus.git
 cd prompt-line-plus
-git checkout v0.x.x  # Optional: replace with desired version tag
+git checkout v0.x.x        # optional: pick a release tag
 pnpm install
-pnpm run install-app    # Build and install to /Applications (includes code signing setup)
+pnpm run install-app       # builds and installs to /Applications (sets up code signing)
 ```
 
-Launch Prompt Line Plus. An icon will appear in the system tray.
+Once installed, a tray icon appears and you can summon the window with `Cmd+Shift+Space`.
 
 <div><img src="assets/doc6.png" width="200"></div>
 
-You can start using it with `Cmd+Shift+Space`.
+### Accessibility permission
 
-### Accessibility Permissions
-
-Prompt Line requires accessibility permissions to paste text into other applications.
-A dialog box will appear on first use, so follow the instructions to set it up.
+Pasting into other apps requires accessibility permission. macOS prompts you on first use — follow the dialog to grant it.
 
 <div><img src="assets/doc7.png" width="200"></div>
 
+If the prompt never appears, or paste stops working:
 
-### Troubleshooting
+1. Open **System Settings → Privacy & Security → Accessibility**.
+2. Enable **Prompt Line Plus** (add it from Applications with **+** if it is missing).
+3. If it is already enabled but still failing, remove it with **−** to reset, then re-add it.
 
-#### If the accessibility permissions dialog box does not appear
+You can also reset the permission from the command line:
 
-1. Open **System Settings** → **Privacy and Security** → **Accessibility**.
-2. Find “Prompt Line” in the list and enable it.
-3. If it is not in the list, add Prompt Line from Applications using the “+” button.
-
-#### If “Prompt Line” is enabled in Accessibility Permissions but you still cannot paste
-
-1. Open **System Settings** → **Privacy and Security** → **Accessibility**
-2. Delete “Prompt Line” from Applications using the “-” button to reset permissions
-3. The issue should be resolved after reconfiguring settings.
-
-Accessibility permissions can also be reset using the following command:
 ```bash
 pnpm run reset-accessibility
 ```
 
-## 📦 Update
-
-If you already have an older version installed and want to update to the latest version:
+### Updating
 
 ```bash
 git pull
 pnpm install
 pnpm run install-app
-pnpm run migrate-settings        # Migrate settings to latest defaults (auto-backup)
+pnpm run migrate-settings   # refresh settings to the latest defaults (auto-backup)
 ```
 
 ## Usage
 
-### Basic Workflow
-1. Move to where you want to input
-2. Press `Cmd+Shift+Space` to open Prompt Line
-3. Type your text
-4. Press `Cmd+Enter` to paste text
-5. Continue working
+1. Go to wherever you want to type.
+2. Press `Cmd+Shift+Space` to open the window.
+3. Write your prompt (use `Enter` / `Tab` for outlines).
+4. Press `Cmd+Enter` to paste it into the app you came from.
+5. Press `Esc` to dismiss the window when you are done.
 
-### Features
+Handy extras:
 
-- **History Panel** - Click previous entries to reuse. Search is also available. (`Cmd+f`)
-- **Draft Autosave** - Automatically saves your work
-- **Image Support** - Paste clipboard images with `Cmd+V`
-- **File Opener** - Open files from file path text (`Ctrl+Enter` or `Cmd+Click`)
-- **File Search** - Search files by typing `@`
-- **Symbol Search** - Search code symbols by typing `@<lang>:<query>` (e.g., `@ts:Config`)
-- **Custom Search** - Search agents, plans, teams, history, etc. by typing `@prefix:` (extensible with [plugins](docs/en/plugins.md))
+- **History** — reuse past prompts from the side menu; search with `Cmd+f`.
+- **Draft autosave** — your in-progress text is kept automatically.
+- **Image paste** — paste clipboard images with `Cmd+V`.
+- **Open file paths** — turn a file path into an open action with `Ctrl+Enter` or `Cmd+Click`.
+- **File search** — type `@` to find files.
+- **Symbol search** — type `@<lang>:<query>` (e.g. `@ts:Config`).
+- **Custom search** — type `@prefix:` for agents, plans, history, and more (extensible via [plugins](docs/en/plugins.md)).
 
 ## ⚙️ Settings
 
-Settings file: `~/.prompt-line/settings.yaml` (hot-reloaded, no restart needed)
+Settings live in `~/.prompt-line/settings.yaml` and hot-reload without a restart.
 
-See: [Settings Reference](docs/en/settings.md) | [settings.example.yaml](settings.example.yaml) | [Migration Guide](docs/en/migration.md)
+See the [Settings Reference](docs/en/settings.md), [settings.example.yaml](settings.example.yaml), and [Migration Guide](docs/en/migration.md).
 
 ## 🔌 Plugins
 
-Plugins are YAML files that add agent skills (`/`), custom search (`@prefix:`), and built-in commands/skills/agents for CLI tools.
+Plugins are YAML files that add agent skills (`/`), custom search (`@prefix:`), and built-in commands for CLI tools.
 
-**Quickest way:** Place a YAML file in `~/.prompt-line/agent-skills/`, `~/.prompt-line/custom-search/`, or `~/.prompt-line/agent-built-in/` — no GitHub repo needed.
+The quickest path needs no GitHub repo at all — drop a YAML file into `~/.prompt-line/agent-skills/`, `~/.prompt-line/custom-search/`, or `~/.prompt-line/agent-built-in/`.
 
-**Share via GitHub:** Install plugins from repositories:
+To install shared plugins from a repository:
 
 ```bash
-# Global CLI setup (run once in the prompt-line project directory)
-pnpm link
-
-# Install plugins
+pnpm link                                                  # one-time global CLI setup
 prompt-line-plugin install github.com/nkmr-jp/prompt-line-plugins
-prompt-line-plugin install github.com/user/repo@branch   # specific version
+prompt-line-plugin install github.com/user/repo@branch     # pin a version
 ```
 
-**Details:** [docs/en/plugins.md](docs/en/plugins.md)<br>
-**Example repo:** [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins)
+Details: [docs/en/plugins.md](docs/en/plugins.md). Example repository: [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins).
 
-## Prompt History
+## Prompt history & privacy
 
-- All data stored locally on your Mac
-- No internet connection required
-- Prompt history saved in `~/.prompt-line/history.jsonl`
-- Saved in JSON Lines format, so you can analyze it using [DuckDB](https://duckdb.org/)
-
-![doc8.png](assets/doc8.png)
+Everything stays on your Mac — no network connection is required. History is appended to `~/.prompt-line/history.jsonl` in JSON Lines format, so you can query it with tools like [DuckDB](https://duckdb.org/).
 
 ## Contributing
 
-See [Contribution Guide](CONTRIBUTING.md) for details.
+See the [Contribution Guide](CONTRIBUTING.md).
 
 ## Credits
 
-Prompt Line Plus is a derivative work built on top of **[Prompt Line](https://github.com/nkmr-jp/prompt-line)** by **[nkmr-jp](https://github.com/nkmr-jp)** (© 2025 nkmr-jp, MIT License). All credit for the original application goes to the upstream author. See the upstream docs ([Ask DeepWiki](https://deepwiki.com/nkmr-jp/prompt-line)) for background.
+Prompt Line Plus stands on **[Prompt Line](https://github.com/nkmr-jp/prompt-line)** by **[nkmr-jp](https://github.com/nkmr-jp)** (© 2025 nkmr-jp, MIT License). The original application — its architecture, native macOS integration, search, history, and plugin system — is entirely their work, and all credit for that foundation belongs to them. Background docs: [Ask DeepWiki](https://deepwiki.com/nkmr-jp/prompt-line).
 
-Modifications introduced in this fork:
+What this fork changes on top of the original:
 
-- **Bullet-list auto-formatting** — Enter continues/exits a list, Tab / Shift+Tab adjust indentation.
-- **Glassmorphic transparent window** — backdrop-blurred, translucent UI.
-- **Stays open on blur** — the window is dismissed only with Esc, not on focus loss.
+- **Bullet-list auto-formatting** in the input area (`Enter` continues/exits, `Tab` / `Shift+Tab` indent).
+- **A glassmorphic, transparent window** in place of the solid panel.
+- **No auto-hide on blur** — the window closes only with `Esc`.
 
 ## License
 
-MIT License - see [LICENSE](./LICENSE) and [NOTICE](./NOTICE) for details. The original copyright notice (© 2025 nkmr-jp) is retained as required by the MIT License.
+MIT License — see [LICENSE](./LICENSE) and [NOTICE](./NOTICE). The original copyright notice (© 2025 nkmr-jp) is retained as the MIT License requires.

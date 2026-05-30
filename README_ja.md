@@ -3,193 +3,156 @@
 [English](README.md) |
 日本語
 
-> **Prompt Line Plus** は [nkmr-jp/prompt-line](https://github.com/nkmr-jp/prompt-line)（MIT）の派生版です。
-> 箇条書きの自動整形、グラスモーフィックな透過ウィンドウ、フォーカス離脱で閉じない（Escで閉じる）挙動を追加しています。詳細は [クレジット](#クレジット) を参照。
+> **Prompt Line Plus** は [nkmr-jp/prompt-line](https://github.com/nkmr-jp/prompt-line)（MIT）の派生版です。オリジナルの「素早く呼び出せるフローティング入力」の核はそのままに、アウトライン編集・グラス UI・閉じないウィンドウを軸に編集体験を作り直しています。詳細は [クレジット](#クレジット) を参照。
 
 ## 概要
-Prompt Line Plusは、[Claude Code](https://github.com/anthropics/claude-code)、[Codex CLI](https://github.com/openai/codex)、[Gemini CLI](https://github.com/google-gemini/gemini-cli) などのCLI型AIコーディングエージェントのターミナルでのプロンプト入力体験の向上を目的として開発したmacOSアプリです。
-フローティングウィンドウによる快適な入力体験を提供します。
 
-主な機能：
+Prompt Line Plus は、ターミナルの AI コーディングエージェント — [Claude Code](https://github.com/anthropics/claude-code)、[Codex CLI](https://github.com/openai/codex)、[Gemini CLI](https://github.com/google-gemini/gemini-cli) など、テキストを貼り付けられるものすべて — へプロンプトを書くための macOS フローティング入力ウィンドウです。どこからでもショートカットで呼び出し、本物のテキストエリアで快適に書き、直前のアプリへ貼り付けます。
 
-1. **サクッと入力、サクッと貼り付け** — `Cmd+Shift+Space`でフローティングウィンドウを起動、`Cmd+Enter`でどこにでも貼り付け
-2. **コンテキスト検索** — `/`や`@`でエージェントスキル、ファイル、シンボルなどを検索。プロンプト履歴の再利用も可能
-3. **プラグインで拡張** — シンプルなYAMLファイルでカスタム検索やスキル検索を追加（[プラグインガイド](docs/ja/plugins.md)）
+本ビルドは、オリジナルの Prompt Line に対する一つの解釈で、次の 3 点を軸にしています。
+
+1. **一行ではなくアウトラインを書く** — Enter と Tab がアウトライナのように振る舞い、入力しながら箇条書きが整います。
+2. **塞がず、浮かぶ** — backdrop blur の半透明パネルが作業を覆わず、その上に重なります。
+3. **消すまで残る** — フォーカスを失っても閉じず、`Esc` で意図的に閉じます。
 
 ## 特徴
-### サクッと起動、サクッと貼付け
-ショートカットでサクッと起動 (`Cmd+Shift+Space`)。<br>
-テキスト入力してサクッと貼付け(`Cmd+Enter`)。
-![doc1.gif](assets/doc1.gif)
 
-### 音声入力したテキストの編集にも最適
-操作性は一般的なテキストエディタと同じです。<br>
-もちろん音声入力アプリと組み合わせて使うこともできます。<br>
-Enterを押しても勝手に送信されないので、改行する場合も気をつける必要はありません。 <br>
-音声入力したテキストの編集にも最適です。<br>
-(この動画では[superwhisper](https://superwhisper.com/)を使っています。)
-![doc2.gif](assets/doc2.gif)
+> 📸 Prompt Line Plus の UI（グラス／透過）を写したスクリーンショット・GIF は今後追加予定です。オリジナルのデモ画像は upstream の UI を写したもので本ビルドとは見た目が異なるため削除しました。
 
-### プロンプト履歴を検索して再利用可能
-プロンプト履歴は保存されており、右のメニューから再利用可能です。<br>
-検索もできます。(`Cmd+f`)
-![doc3.gif](assets/doc3.gif)
+### どこでも呼び出し、どこへでも貼り付け
+任意のテキストフィールドで `Cmd+Shift+Space` を押して開き、入力し、`Cmd+Enter` で直前のアプリへ貼り付けます。ターミナルでも一般的なアプリでも動くので、同じプロンプトを複数のツールで使い回すのに便利です。
 
-### どこでも起動
-テキスト入力フィールドであればどこでも起動できます。<br>
-同じプロンプトを他のアプリで再利用したい場合にも便利です。
-![doc1.gif](assets/doc4.gif)
+### 箇条書きの自動整形
+入力エリアは箇条書きをアウトライナのように扱います。
 
-もちろん、ターミナル以外でも使えます。
-![doc5.gif](assets/doc5.gif)
+- `Enter` は箇条書きを継続し、空の項目では一段戻る／リストを抜けます。
+- `Tab` / `Shift+Tab` でインデントを増減します。
+- 新規ウィンドウは `- ` から始まり、すぐ書き始められます。
+
+### グラスな透過ウィンドウ
+パネルは backdrop blur 付きの透過表示で、不透明な箱ではなくエディタやターミナルの上に浮かぶオーバーレイとして見えます。
+
+### フォーカス離脱で閉じない
+フォーカスを失っても即座には隠れません。別のウィンドウに目を移している間も開いたままで、閉じるのは `Esc` のみ — 別ウィンドウからコンテキストをコピーしてプロンプトに取り込むときに便利です。
+
+### 普通のエディタのように編集できる
+一般的なテキストエディタと同じ操作性なので、音声入力アプリ（例: [superwhisper](https://superwhisper.com/)）とも相性が良好です。`Enter` で勝手に送信されないため、改行も安心です。
+
+### 検索できるプロンプト履歴
+すべてのプロンプトが保存され、サイドメニューから再利用できます。`Cmd+f` で検索も可能です。
 
 ### コンテキスト検索と入力補完
-
-`/`や`@`を入力するとエージェントスキル・組み込みコマンド・ファイル・シンボルなどのコンテキストを検索して入力補完できます。<br>
-プラグインで拡張可能です。詳細: [プラグインガイド](docs/ja/plugins.md) | [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins)
-<table>
-<tr>
-<td>エージェントスキルと組み込みコマンド<img src="assets/doc9.png"> </td>
-<td>ファイルとディレクトリ検索 <img src="assets/doc10.png"> </td>
-</tr>
-<tr>
-<td>シンボル検索<img src="assets/doc11.png"> </td>
-<td>カスタム検索 (@agent:, @plan:, @team:, @ghq: 等) <img src="assets/doc14.png"> </td>
-</tr>
-</table>
+`/` や `@` を入力すると、エージェントスキル・組み込みコマンド・ファイル・コードシンボルを検索して補完できます。プラグインで拡張可能です — [プラグインガイド](docs/ja/plugins.md) と [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins) を参照してください。
 
 ## 📦 インストール
 
-### システム要件
+### 必要環境
 
-- macOS 10.14以降
-- Node.js 20以上
+- macOS 10.14 以降
+- Node.js 20 以上
 - [pnpm](https://pnpm.io/installation)
-- Xcodeコマンドラインツール または Xcode（ネイティブツールのコンパイル用）
-- [fd](https://github.com/sharkdp/fd) と [rg(ripgrep)](https://github.com/BurntSushi/ripgrep)（ファイル検索・シンボル検索機能で使用）
+- Xcode Command Line Tools（ネイティブヘルパーのコンパイル用）
+- [fd](https://github.com/sharkdp/fd) と [ripgrep](https://github.com/BurntSushi/ripgrep)（ファイル検索・シンボル検索用）
 
-### Prompt Line の インストール
+### ビルドとインストール
 
 ```bash
 git clone https://github.com/kosukekoreyuki/prompt-line-plus.git
 cd prompt-line-plus
-git checkout v0.x.x  # 任意: 必要なバージョンタグに置き換え
+git checkout v0.x.x        # 任意: リリースタグを指定
 pnpm install
-pnpm run install-app    # ビルドして/Applicationsにインストール（コード署名セットアップ含む）
+pnpm run install-app       # ビルドして /Applications にインストール（コード署名セットアップ含む）
 ```
 
-Prompt Line Plusを起動。システムトレーにアイコンが表示されます。
+インストールするとトレイにアイコンが表示され、`Cmd+Shift+Space` で呼び出せます。
 
 <div><img src="assets/doc6.png" width="200"></div>
 
-`Cmd+Shift+Space`で使い始められます。
-
 ### アクセシビリティ権限
 
-Prompt Lineが他のアプリケーションにテキストを貼り付けるには、アクセシビリティ権限が必要です。<br>
-初回使用時にダイアログボックスが表示されるので、指示に従って設定してください。
+他のアプリへ貼り付けるにはアクセシビリティ権限が必要です。初回使用時に macOS がダイアログを表示するので、指示に従って許可してください。
 
 <div><img src="assets/doc7.png" width="200"></div>
 
-### トラブルシューティング
+ダイアログが出ない、または貼り付けできなくなった場合:
 
-#### アクセシビリティ権限のダイアログボックスが表示されない場合
+1. **システム設定 → プライバシーとセキュリティ → アクセシビリティ** を開く。
+2. **Prompt Line Plus** を有効にする（一覧にない場合は **+** で Applications から追加）。
+3. 有効なのに失敗する場合は **−** で一度削除してリセットし、再追加する。
 
-1. **システム設定** → **プライバシーとセキュリティ** → **アクセシビリティ**を開く
-2. リストから「Prompt Line」を見つけて有効にする
-3. リストにない場合は「+」ボタンでApplicationsからPrompt Lineを追加
+権限はコマンドからもリセットできます。
 
-#### アクセシビリティ権限で「Prompt Line」が有効になっているのに貼付けできない場合
-
-1. **システム設定** → **プライバシーとセキュリティ** → **アクセシビリティ**を開く
-2. 「-」ボタンでApplicationsからPrompt Lineを削除して権限をリセット
-3. 再度設定すれば動くようになります。
-
-アクセシビリティ権限のリセットは以下のコマンドでもできます。
 ```bash
 pnpm run reset-accessibility
 ```
 
-
-## 📦 アップデート
-
-既に古いバージョンをインストール済みで、最新版にアップデートする場合:
+### アップデート
 
 ```bash
 git pull
 pnpm install
 pnpm run install-app
-pnpm run migrate-settings        # 設定ファイルを最新のデフォルトに移行（自動バックアップ）
+pnpm run migrate-settings   # 設定を最新のデフォルトに更新（自動バックアップ）
 ```
 
-## 使用方法
+## 使い方
 
-### 基本的なワークフロー
-1. 入力したい場所に移動
-2. `Cmd+Shift+Space`を押してPrompt Lineを開く
-3. テキストを入力
-4. `Cmd+Enter`を押してテキストを貼り付け
-5. 作業を継続
+1. 入力したい場所へ移動する。
+2. `Cmd+Shift+Space` でウィンドウを開く。
+3. プロンプトを書く（アウトラインは `Enter` / `Tab`）。
+4. `Cmd+Enter` で直前のアプリへ貼り付ける。
+5. 終わったら `Esc` でウィンドウを閉じる。
 
-### 機能
+便利な機能:
 
-- **履歴パネル** - 過去のエントリをクリックして再利用。検索も可能。(`Cmd+f`)
-- **ドラフト自動保存** - 作業内容を自動的に保存
-- **画像サポート** - `Cmd+V`でクリップボード画像を貼り付け
-- **ファイルオープン** - ファイルパスのテキストからファイルを起動 (`Ctrl+Enter` or `Cmd+クリック`)
-- **ファイル検索** - `@`を入力してファイルを検索
-- **シンボル検索** - `@<言語>:<クエリ>`と入力してコードシンボルを検索 (例: `@ts:Config`)
-- **カスタム検索** - `@prefix:` でエージェント、プラン、チーム、履歴などを検索（[プラグイン](docs/ja/plugins.md)で拡張可能）
+- **履歴** — サイドメニューから過去のプロンプトを再利用。`Cmd+f` で検索。
+- **ドラフト自動保存** — 入力中のテキストを自動的に保持。
+- **画像貼り付け** — `Cmd+V` でクリップボード画像を貼り付け。
+- **ファイルパスを開く** — `Ctrl+Enter` または `Cmd+クリック` でファイルパスを開く。
+- **ファイル検索** — `@` でファイルを検索。
+- **シンボル検索** — `@<言語>:<クエリ>`（例: `@ts:Config`）。
+- **カスタム検索** — `@prefix:` でエージェント・プラン・履歴などを検索（[プラグイン](docs/ja/plugins.md)で拡張可能）。
 
 ## ⚙️ 設定
 
-設定ファイル: `~/.prompt-line/settings.yaml`（ホットリロード対応、再起動不要）
+設定は `~/.prompt-line/settings.yaml` にあり、再起動なしでホットリロードされます。
 
-参照: [設定リファレンス](docs/ja/settings.md) | [settings.example.yaml](settings.example.yaml) | [マイグレーションガイド](docs/ja/migration.md)
+[設定リファレンス](docs/ja/settings.md)、[settings.example.yaml](settings.example.yaml)、[マイグレーションガイド](docs/ja/migration.md) を参照してください。
 
 ## 🔌 プラグイン
 
-プラグインはYAMLファイルで、エージェントスキル（`/`）、カスタム検索（`@prefix:`）、CLIツールの組み込みコマンド・スキル・エージェントを追加します。
+プラグインは、エージェントスキル（`/`）、カスタム検索（`@prefix:`）、CLI ツール向けの組み込みコマンドを追加する YAML ファイルです。
 
-**最も簡単な方法:** `~/.prompt-line/agent-skills/`、`~/.prompt-line/custom-search/`、`~/.prompt-line/agent-built-in/` にYAMLファイルを配置するだけ。GitHubリポジトリは不要です。
+最も簡単な方法は GitHub リポジトリすら不要で、`~/.prompt-line/agent-skills/`、`~/.prompt-line/custom-search/`、`~/.prompt-line/agent-built-in/` のいずれかに YAML を置くだけです。
 
-**GitHubで共有:** リポジトリからプラグインをインストール：
+リポジトリから共有プラグインをインストールする場合:
 
 ```bash
-# グローバルCLIセットアップ（prompt-lineプロジェクトディレクトリで一度だけ実行）
-pnpm link
-
-# プラグインのインストール
+pnpm link                                                  # グローバル CLI の初回セットアップ
 prompt-line-plugin install github.com/nkmr-jp/prompt-line-plugins
-prompt-line-plugin install github.com/user/repo@branch   # バージョン指定
+prompt-line-plugin install github.com/user/repo@branch     # バージョン指定
 ```
 
-**詳細:** [docs/ja/plugins.md](docs/ja/plugins.md)<br>
-**リポジトリ例:** [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins)
+詳細: [docs/ja/plugins.md](docs/ja/plugins.md)。リポジトリ例: [prompt-line-plugins](https://github.com/nkmr-jp/prompt-line-plugins)。
 
-## プロンプト履歴
+## プロンプト履歴とプライバシー
 
-- すべてのデータはMac内にローカル保存
-- インターネット接続不要
-- プロンプト履歴は `~/.prompt-line/history.jsonl` に保存
-- JSON Lines形式で保存されているので[DuckDB](https://duckdb.org/)を使って分析することもできます。
-
-![doc8.png](assets/doc8.png)
+すべて Mac 内に保存され、ネットワーク接続は不要です。履歴は `~/.prompt-line/history.jsonl` に JSON Lines 形式で追記されるため、[DuckDB](https://duckdb.org/) などで分析できます。
 
 ## 貢献
 
-詳細は [Contribution Guide](CONTRIBUTING.md) をご確認ください。
+[Contribution Guide](CONTRIBUTING.md) を参照してください。
 
 ## クレジット
 
-Prompt Line Plus は、**[nkmr-jp](https://github.com/nkmr-jp)** による **[Prompt Line](https://github.com/nkmr-jp/prompt-line)**（© 2025 nkmr-jp, MIT License）を基にした派生版です。オリジナルアプリケーションのすべての功績は upstream の作者に帰属します。背景は upstream のドキュメント（[Ask DeepWiki](https://deepwiki.com/nkmr-jp/prompt-line)）を参照してください。
+Prompt Line Plus は、**[nkmr-jp](https://github.com/nkmr-jp)** による **[Prompt Line](https://github.com/nkmr-jp/prompt-line)**（© 2025 nkmr-jp, MIT License）の上に成り立っています。オリジナルアプリケーション — そのアーキテクチャ、ネイティブ macOS 連携、検索、履歴、プラグインシステム — はすべて作者の成果であり、その土台に関する功績はすべて作者に帰属します。背景資料: [Ask DeepWiki](https://deepwiki.com/nkmr-jp/prompt-line)。
 
-本フォークで追加した変更点:
+本フォークがオリジナルに加えた変更点:
 
-- **箇条書きの自動整形** — Enter で箇条書きを継続/解除、Tab / Shift+Tab でインデントを増減。
-- **グラスモーフィックな透過ウィンドウ** — backdrop blur による半透明 UI。
-- **フォーカス離脱で閉じない** — フォーカスを失っても閉じず、Esc でのみ閉じる。
+- 入力エリアの **箇条書き自動整形**（`Enter` で継続/解除、`Tab` / `Shift+Tab` でインデント）。
+- 不透明パネルに代わる **グラスモーフィックな透過ウィンドウ**。
+- **フォーカス離脱で閉じない** — 閉じるのは `Esc` のみ。
 
 ## ライセンス
 
-MIT License - 詳細は [LICENSE](./LICENSE) と [NOTICE](./NOTICE) をご確認ください。MIT License の要件に従い、オリジナルの著作権表示（© 2025 nkmr-jp）を保持しています。
+MIT License — [LICENSE](./LICENSE) と [NOTICE](./NOTICE) を参照してください。MIT License の要件に従い、オリジナルの著作権表示（© 2025 nkmr-jp）を保持しています。
