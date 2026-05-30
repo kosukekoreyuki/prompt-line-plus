@@ -43,6 +43,7 @@ vi.mock('../../src/renderer/event-handler', () => ({
         setMentionManager: vi.fn(),
         setDomManager: vi.fn(),
         setUserSettings: vi.fn(),
+        setAutoFormatManager: vi.fn(),
         setupEventListeners: vi.fn(),
         getIsComposing: vi.fn().mockReturnValue(false)
     }; })
